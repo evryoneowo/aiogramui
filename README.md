@@ -1,4 +1,4 @@
-[![PyPI version](https://badge.fury.io/py/aiogramui.svg)](https://pypi.org/project/aiogramui/)
+[![PyPI Package](https://img.shields.io/badge/package-aiogramui-blue)](https://pypi.org/project/aiogramui/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 # aiogramui
