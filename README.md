@@ -1,119 +1,118 @@
 [![PyPI Package](https://img.shields.io/badge/package-aiogramui-blue)](https://pypi.org/project/aiogramui/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# aiogramui
+# aiogramui 1.1
 ✨ A minimalistic UI framework for aiogram bots.
 
-## Contents
-
-- [Installation](#installation)
-- [Features](#features)
-  - [Building menu](#building-menu)
-  - [Adding buttons and dialogs](#adding-buttons-and-dialogs)
-  - [Generating doc](#generating-doc)
-- [Pro tips](#pro-tips)
-
 ## Installation
-1. Via pip
 ```bash
 pip install aiogramui
 ```
-2. Using git
-```bash
-git clone https://github.com/evryoneowo/aiogramui && cd aiogramui
-pip install .
-```
 
-## Features
-### Building menu
+## Documentation
+### Pages
+Let's create start page and child page "Wallet":
 ```python
-from aiogram import Router
-from aiogram.types import Message
-from aiogram.filters import Command
-
-from aiogramui import init, Root, register
-
-router = Router()
+from aiogramui import *
 
 init(router)
 
-start = Root('Start', backtext='back')
-wallet = start.page('Wallet')
+startpage = Root('start', backtext='Back')
+wallet = startpage.page('Wallet')
 
-@start
+@startpage
 @router.message(Command('start'))
 async def on_start(msg: Message, keyboard=None):
-    await msg.answer('Start page', reply_markup=start.keyboard().as_markup())
+    await msg.answer('start page', reply_markup=startpage.keyboard(msg).as_markup())
 
 @wallet
-async def on_wallet(msg: Message, keyboard):
-    await msg.answer('Wallet page', reply_markup=keyboard.as_markup())
+async def on_wallet(msg: Message, keyboard=None):
+    await msg.answer('wallet page', reply_markup=keyboard.as_markup())
 
 register()
 ```
 
-### Adding buttons and dialogs
+`init()` and `register()` are required. `Root()` - a root page that doesn't have back button. All pages has elements functions, to learn more about them, keep read.
+### Elements
+#### Dialog
 ```python
-from aiogram.types import CallbackQuery
-
-helloworld = start.button('HelloWorld')
-
-@helloworld
-async def on_helloworld(cq: CallbackQuery):
-    await cq.message.answer('Hello, world!')
+Root.dialog(text, *filters)
 ```
-
+Usage:
 ```python
-helloname = start.dialog('HelloName')
+users = {
+    'evr4': '1234',
+    'evryoneowo': '1337',
+    'bestusr': '111111'
+}
 
-@helloname.arg('Enter your name:')
-async def on_helloname(msg: Message, args):
-    await msg.answer(f'Hello, {args[0]}!')
+login = start.dialog('Log in')
 
-    return True
+@passwd.arg('Enter your login')
+async def on_login(msg: Message, args):
+    login = args[0]
+    if login not in users: return # If user entered not valid login then it will ask him again.
+
+@passwd.arg('Enter the password')
+async def on_passwd(msg: Message, args):
+    password = users[args[0]]
+    entered_password = args[1]
+    if password != entered_password: await login.cancel(msg) # If user entered not valid password then it will cancel dialog.
+
+    await msg.answer(f'Welcome, {args[0]}!')
 ```
+#### Button
+```python
+Root.button(text, *filters)
+```
+Usage:
+```python
+hwbtn = start.button('Click me')
 
-### Generating doc
+@hwbtn
+async def on_hwbtn(msg: Message):
+    await msg.answer('Hello, World!')
+```
+#### Checkbox
+```python
+Root.checkbox(off, on, *filters, default=False)
+```
+Usage:
+```python
+checkbox = start.checkbox('off', 'on')
+
+@checkbox
+async def on_checkbox(msg: Message, state):
+    await msg.answer(f'State: {state}')
+```
+You can also save values of checkboxes for loading them later using `users` arg in `checkbox()`.
+#### Handle
+```python
+handle(cqdata, *filters)
+```
+Usage:
+If you has inline keyboard with cqdata "delete" that deletes message:
+```python
+@handle(data == 'hi')
+async def on_hi(cq: CallbackQuery):
+    await cq.message.delete()
+```
+### Filters
+You can use filters at pages or elements. e. g.
+```python
+from aiogramui.filters import UserFilter
+
+admins = [12453, 21546, 69283]
+
+adminpage = start.page('Admin', UserFilter(admin))
+
+@adminpage
+async def on_adminpage(msg: Message, keyboard):
+    await msg.answer('Admin page', reply_markup=keyboard.as_markup())
+```
+### Doc
 ```python
 doc = start.generate_doc()
 ```
 
-## Pro tips
-### Cancel and repeat in dialogs
-```python
-password = start.dialog('Password')
-
-@password.arg('Enter the password:')
-async def on_password(msg: Message, args):
-    if args[0] != '1234': return # <- If user entered not valid password then it will ask him again.
-
-    await msg.answer('Right!')
-    
-    return True
-```
-
-```python
-password = start.dialog('Password')
-
-@password.arg('Enter the password:')
-async def on_password(msg: Message, args):
-    if args[0] != '1234': await password.cancel(msg) # <- If user entered not valid password then it will cancel dialog.
-
-    await msg.answer('Right!')
-    
-    return True
-```
-
-### Pages only for allowed users
-```python
-admins = [123, 321]
-
-admin = start.page('Admin', allow=admins)
-
-@admin
-async def on_admin(msg: Message, keyboard):
-    await msg.answer('Admin page', reply_markup=keyboard.as_markup())
-```
-
-> [!WARNING]
-> If you show a page only for allowed users, then you must get keyboard manually with `user` arg in parent page.
+It will generate docs of your menu using docstrings for descriptions.

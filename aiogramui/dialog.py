@@ -10,11 +10,12 @@ class UserInDialog(BaseFilter):
         return message.from_user.id in self.dialog.users
 
 class Dialog:
-    def __init__(self, text, page, router: Router):
+    def __init__(self, text, page, filters=[]):
         self.text = text
         self.questions = []
         self.users = {}
         self.page = page
+        self.filters = filters
 
         @router.message(UserInDialog(self))
         async def on_msg(msg: Message):
