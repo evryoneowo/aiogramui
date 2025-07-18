@@ -16,7 +16,7 @@ class UserFilter:
         else:
             chatid = item.message.chat.id
 
-        return item.from_user.id in self.allowed_users or chat in self.allowed_users
+        return item.from_user.id in self.allowed_users or chatid in self.allowed_users
 
 class ChatIdFilter:
     '''Allowed chats filter.'''
@@ -30,7 +30,7 @@ class ChatIdFilter:
         else:
             chatid = item.message.chat.id
 
-        return item.chat.id in self.allowed_chats
+        return chatid in self.allowed_chats
 
 class ChatTypeFilter:
     '''Allowed chat types filter.'''

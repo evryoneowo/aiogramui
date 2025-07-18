@@ -1,6 +1,6 @@
 [project]
 name = "aiogramui"
-version = "1.1"
+version = "1.1.1"
 description = "A minimalistic UI framework for aiogram bots."
 readme = "README.md"
 license = { text = "MIT" }
