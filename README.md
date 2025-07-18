@@ -3,6 +3,7 @@
 
 # aiogramui 1.1.1
 ✨ A minimalistic UI framework for aiogram bots.
+Devlog - https://t.me/aiogramui/
 
 ## Installation
 ```bash
