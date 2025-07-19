@@ -42,7 +42,7 @@ class Root:
     def dialog(self, text, *filters):
         '''Add dialog to page.'''
 
-        dialog = Dialog(text, self, filters=filters)
+        dialog = Dialog(text, self, router, filters=filters)
 
         Root.cqs.append(dialog)
         self.local.append(dialog)

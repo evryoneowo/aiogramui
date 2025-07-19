@@ -10,7 +10,7 @@ class UserInDialog(BaseFilter):
         return message.from_user.id in self.dialog.users
 
 class Dialog:
-    def __init__(self, text, page, filters=[]):
+    def __init__(self, text, page, router, filters=[]):
         self.text = text
         self.questions = []
         self.users = {}
@@ -39,7 +39,7 @@ class Dialog:
 
     async def cancel(self, msg: Message):
         del self.users[msg.from_user.id]
-        await self.page.func(msg, self.page.keyboard())
+        await self.page.func(msg, self.page.keyboard(msg))
 
     def arg(self, text):
         def deco(func):
