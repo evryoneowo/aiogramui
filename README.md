@@ -1,7 +1,7 @@
 [![PyPI Package](https://img.shields.io/badge/package-aiogramui-blue)](https://pypi.org/project/aiogramui/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# aiogramui 1.1.1
+# aiogramui 1.1.2
 ✨ A minimalistic UI framework for aiogram bots.
 Devlog - https://t.me/aiogramui/
 
