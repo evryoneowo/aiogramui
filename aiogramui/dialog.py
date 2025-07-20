@@ -38,10 +38,14 @@ class Dialog:
                 await self.cancel(msg)
 
     async def cancel(self, msg: Message):
+        '''Cancel the dialog by message.'''
+
         del self.users[msg.from_user.id]
         await self.page.func(msg, self.page.keyboard(msg))
 
     def arg(self, text):
+        '''Add an argument (question) to dialog.'''
+
         def deco(func):
             self.questions.append((text, func))
         

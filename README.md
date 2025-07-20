@@ -1,7 +1,7 @@
 [![PyPI Package](https://img.shields.io/badge/package-aiogramui-blue)](https://pypi.org/project/aiogramui/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# aiogramui 1.1.2
+# aiogramui 1.1.3
 ✨ A minimalistic UI framework for aiogram bots.
 Devlog - https://t.me/aiogramui/
 
@@ -99,7 +99,7 @@ async def on_hi(cq: CallbackQuery):
     await cq.message.delete()
 ```
 ### Filters
-You can use filters at pages or elements. e. g.
+You can use filters at pages or elements. e.g.
 ```python
 from aiogramui.filters import UserFilter
 

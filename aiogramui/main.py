@@ -15,9 +15,11 @@ def init(r):
     router = r
 
 class Root:
+    '''Class of page.'''
+
     cqs = []
 
-    def __init__(self, text, backtext, back=False, filters=[]):
+    def __init__(self, text: str, backtext: str, back=False, filters=[]):
         '''Initialaze root page.'''
 
         self.text = text
@@ -29,7 +31,7 @@ class Root:
         if not back:
             Root.cqs.append(self)
     
-    def page(self, text, *filters):
+    def page(self, text: str, *filters) -> Root:
         '''Add child page.'''
         
         root = Root(text, self.backtext, back=self, filters=filters)
@@ -39,7 +41,7 @@ class Root:
 
         return root
     
-    def dialog(self, text, *filters):
+    def dialog(self, text: str, *filters) -> Dialog:
         '''Add dialog to page.'''
 
         dialog = Dialog(text, self, router, filters=filters)
@@ -49,7 +51,7 @@ class Root:
 
         return dialog
     
-    def button(self, text, *filters):
+    def button(self, text: str, *filters) -> Button:
         '''Add button to page.'''
 
         button = Button(text, filters=filters)
@@ -59,7 +61,7 @@ class Root:
 
         return button
     
-    def checkbox(self, off, on, *filters, default=False, users={}):
+    def checkbox(self, off: str, on: str, *filters, default: bool = False, users: dict[int, bool] = {}) -> Checkbox:
         '''Add checkbox to page.'''
 
         checkbox = Checkbox(off, on, self.keyboard, default, users, filters=filters)
@@ -69,7 +71,7 @@ class Root:
 
         return checkbox
 
-    def keyboard(self, data, adjust=2):
+    def keyboard(self, data: Message | CallbackQuery, adjust: int = 2) -> InlineKeyboardBuilder:
         '''Get an aiogram.utils.keyboard.InlineKeyboardBuilder of current page.'''
 
         k = InlineKeyboardBuilder()
@@ -104,7 +106,7 @@ class Root:
         
         return k
     
-    def generate_doc(self):
+    def generate_doc(self) -> str:
         '''Generate doc.'''
 
         txt = f'{self.text} - {self.func.__doc__}' if self.func.__doc__ else self.text
@@ -125,7 +127,7 @@ class Root:
         return func
 
 handlers = {}
-def handle(cqdata, *filters):
+def handle(cqdata, *filters) -> Custom:
     '''Handle custom callback query. You can use "data", e.g. "len(data) == 5".'''
 
     global handlers
