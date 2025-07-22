@@ -7,7 +7,7 @@
 from logging import getLogger
 
 from aiogram import Router
-from aiogram.types import CallbackQuery, InlineKeyboardButton
+from aiogram.types import Message, CallbackQuery, InlineKeyboardButton
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from .dialog import Dialog
