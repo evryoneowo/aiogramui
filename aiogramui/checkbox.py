@@ -1,11 +1,17 @@
-from aiogram.types import Message
+# custom.py | part of aiogramui framework
+# author: evryoneowo | year: 2025
+# github: https://github.com/evryoneowo/aiogramui | pypi: https://pypi.org/project/aiogramui
+# -------------------------------------
+# element Checkbox
+
+from aiogram.types import CallbackQuery
 
 class Checkbox:
-    def __init__(self, off, on, keyboard, default=False, users={}, filters=[]):
+    def __init__(self, off: str, on: str, keyboard, default: bool = False, chats: dict[int, bool] = {}, filters=[]):
         self.off, self.on = off, on
         self.keyboard = keyboard
         self.default = default
-        self.users = users
+        self.chats = chats
         self.filters = filters
     
     def __call__(self, func):
@@ -13,25 +19,21 @@ class Checkbox:
 
         return func
     
-    def _check(self, user):
-        if user not in self.users:
-            self.users[user] = self.default
-
-            return False
-        else:
-            return True
+    def _check(self, chat):
+        if chat not in self.chats:
+            self.chats[chat] = self.default
     
-    async def switch(self, msg: Message, data):
-        user = data.from_user.id
+    async def switch(self, cq: CallbackQuery):
+        chat = cq.message.chat.id
 
-        self._check(user)  
-        self.users[user] = not self.users[user]
+        self._check(chat)  
+        self.chats[chat] = not self.chats[chat]
 
-        await msg.edit_reply_markup(reply_markup=self.keyboard(data).as_markup())
+        await cq.message.edit_reply_markup(reply_markup=self.keyboard(cq).as_markup())
 
-        await self.func(msg, self.users[user])
+        await self.func(cq.message, self.chats[chat])
     
-    def text(self, user):
-        self._check(user)
+    def text(self, chat: int) -> str:
+        self._check(chat)
 
-        return self.on if self.users[user] else self.off
+        return self.on if self.chats[chat] else self.off

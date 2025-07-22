@@ -1,3 +1,9 @@
+# filters.py | part of aiogramui framework
+# author: evryoneowo | year: 2025
+# github: https://github.com/evryoneowo/aiogramui | pypi: https://pypi.org/project/aiogramui
+# -------------------------------------
+# just some filters for elements
+
 from aiogram.types import Message
 from aiogram.enums.chat_type import ChatType
 

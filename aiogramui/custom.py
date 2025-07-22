@@ -1,3 +1,9 @@
+# custom.py | part of aiogramui framework
+# author: evryoneowo | year: 2025
+# github: https://github.com/evryoneowo/aiogramui | pypi: https://pypi.org/project/aiogramui
+# -------------------------------------
+# element Custom & data
+
 class Custom:
     def __init__(self, filters=[]):
         self.filters = filters

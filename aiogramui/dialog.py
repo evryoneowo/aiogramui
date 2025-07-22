@@ -1,3 +1,9 @@
+# dialog.py | part of aiogramui framework
+# author: evryoneowo | year: 2025
+# github: https://github.com/evryoneowo/aiogramui | pypi: https://pypi.org/project/aiogramui
+# -------------------------------------
+# element Dialog
+
 from aiogram import Router
 from aiogram.types import Message
 from aiogram.filters import BaseFilter
@@ -10,7 +16,7 @@ class UserInDialog(BaseFilter):
         return message.from_user.id in self.dialog.users
 
 class Dialog:
-    def __init__(self, text, page, router, filters=[]):
+    def __init__(self, text, page, router: Router, filters=[]):
         self.text = text
         self.questions = []
         self.users = {}

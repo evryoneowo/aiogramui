@@ -1,7 +1,7 @@
 [![PyPI Package](https://img.shields.io/badge/package-aiogramui-blue)](https://pypi.org/project/aiogramui/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-# aiogramui 1.1.3
+# aiogramui 1.1.4
 ✨ A minimalistic UI framework for aiogram bots.
 Devlog - https://t.me/aiogramui/
 
@@ -86,7 +86,7 @@ checkbox = start.checkbox('off', 'on')
 async def on_checkbox(msg: Message, state):
     await msg.answer(f'State: {state}')
 ```
-You can also save values of checkboxes for loading them later using `users` arg in `checkbox()`.
+You can also save values of checkboxes for loading them later using `chats` arg in `checkbox()`.
 #### Handle
 ```python
 handle(cqdata, *filters)
