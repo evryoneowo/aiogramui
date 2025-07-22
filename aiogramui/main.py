@@ -15,7 +15,7 @@ from .button import Button
 from .checkbox import Checkbox
 from .custom import Custom
 
-logger = getLogger('aiogramui')
+logging = getLogger('aiogramui')
 
 router = None
 def init(r: Router):
